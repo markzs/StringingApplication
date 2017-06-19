@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StringingAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clubs">
+          <Key>
+            <PropertyRef Name="ClubId" />
+          </Key>
+          <Property Name="ClubId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClubName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Members">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClubId" Type="int" />
+          <Property Name="MemberId" Type="int" />
+          <Property Name="MainStringsId" Type="int" />
+          <Property Name="CrossStringsId" Type="int" />
+          <Property Name="MainTension" Type="int" />
+          <Property Name="CrossTension" Type="int" />
+          <Property Name="DateReceived" Type="date" />
+          <Property Name="DateCompleted" Type="date" />
+          <Property Name="IsDone" Type="bit" />
+        </EntityType>
+        <EntityType Name="Strings">
+          <Key>
+            <PropertyRef Name="StringId" />
+          </Key>
+          <Property Name="StringId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StringName" Type="varchar" MaxLength="50" />
+          <Property Name="Manufacturer" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="IsPolyester" Type="bit" />
+          <Property Name="IsSyntheticGut" Type="bit" />
+          <Property Name="IsOther" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Requests__ClubId__68487DD7">
+          <End Role="Clubs" Type="Self.Clubs" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="ClubId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__CrossS__6C190EBB">
+          <End Role="Strings" Type="Self.Strings" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Strings">
+              <PropertyRef Name="StringId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="CrossStringsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__MainSt__6B24EA82">
+          <End Role="Strings" Type="Self.Strings" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Strings">
+              <PropertyRef Name="StringId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="MainStringsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Member__693CA210">
+          <End Role="Members" Type="Self.Members" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StringingAppDBModelStoreContainer">
+          <EntitySet Name="Clubs" EntityType="Self.Clubs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Members" EntityType="Self.Members" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Strings" EntityType="Self.Strings" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Requests__ClubId__68487DD7" Association="Self.FK__Requests__ClubId__68487DD7">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__CrossS__6C190EBB" Association="Self.FK__Requests__CrossS__6C190EBB">
+            <End Role="Strings" EntitySet="Strings" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__MainSt__6B24EA82" Association="Self.FK__Requests__MainSt__6B24EA82">
+            <End Role="Strings" EntitySet="Strings" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Member__693CA210" Association="Self.FK__Requests__Member__693CA210">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StringingAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Club">
+          <Key>
+            <PropertyRef Name="ClubId" />
+          </Key>
+          <Property Name="ClubId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClubName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__ClubId__68487DD7" FromRole="Clubs" ToRole="Requests" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="MemberId" />
+          </Key>
+          <Property Name="MemberId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Member__693CA210" FromRole="Members" ToRole="Requests" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="RequestId" />
+          </Key>
+          <Property Name="RequestId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClubId" Type="Int32" />
+          <Property Name="MemberId" Type="Int32" />
+          <Property Name="MainStringsId" Type="Int32" />
+          <Property Name="CrossStringsId" Type="Int32" />
+          <Property Name="MainTension" Type="Int32" />
+          <Property Name="CrossTension" Type="Int32" />
+          <Property Name="DateReceived" Type="DateTime" Precision="0" />
+          <Property Name="DateCompleted" Type="DateTime" Precision="0" />
+          <Property Name="IsDone" Type="Boolean" />
+          <NavigationProperty Name="Club" Relationship="Self.FK__Requests__ClubId__68487DD7" FromRole="Requests" ToRole="Clubs" />
+          <NavigationProperty Name="Member" Relationship="Self.FK__Requests__Member__693CA210" FromRole="Requests" ToRole="Members" />
+          <NavigationProperty Name="String" Relationship="Self.FK__Requests__CrossS__6C190EBB" FromRole="Requests" ToRole="Strings" />
+          <NavigationProperty Name="String1" Relationship="Self.FK__Requests__MainSt__6B24EA82" FromRole="Requests" ToRole="Strings" />
+        </EntityType>
+        <EntityType Name="String">
+          <Key>
+            <PropertyRef Name="StringId" />
+          </Key>
+          <Property Name="StringId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StringName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsPolyester" Type="Boolean" />
+          <Property Name="IsSyntheticGut" Type="Boolean" />
+          <Property Name="IsOther" Type="Boolean" />
+          <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__CrossS__6C190EBB" FromRole="Strings" ToRole="Requests" />
+          <NavigationProperty Name="Requests1" Relationship="Self.FK__Requests__MainSt__6B24EA82" FromRole="Strings" ToRole="Requests" />
+        </EntityType>
+        <Association Name="FK__Requests__ClubId__68487DD7">
+          <End Role="Clubs" Type="Self.Club" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clubs">
+              <PropertyRef Name="ClubId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="ClubId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__Member__693CA210">
+          <End Role="Members" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Members">
+              <PropertyRef Name="MemberId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="MemberId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__CrossS__6C190EBB">
+          <End Role="Strings" Type="Self.String" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Strings">
+              <PropertyRef Name="StringId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="CrossStringsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Requests__MainSt__6B24EA82">
+          <End Role="Strings" Type="Self.String" Multiplicity="0..1" />
+          <End Role="Requests" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Strings">
+              <PropertyRef Name="StringId" />
+            </Principal>
+            <Dependent Role="Requests">
+              <PropertyRef Name="MainStringsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StringingAppDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clubs" EntityType="Self.Club" />
+          <EntitySet Name="Members" EntityType="Self.Member" />
+          <EntitySet Name="Requests" EntityType="Self.Request" />
+          <EntitySet Name="Strings" EntityType="Self.String" />
+          <AssociationSet Name="FK__Requests__ClubId__68487DD7" Association="Self.FK__Requests__ClubId__68487DD7">
+            <End Role="Clubs" EntitySet="Clubs" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__Member__693CA210" Association="Self.FK__Requests__Member__693CA210">
+            <End Role="Members" EntitySet="Members" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__CrossS__6C190EBB" Association="Self.FK__Requests__CrossS__6C190EBB">
+            <End Role="Strings" EntitySet="Strings" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Requests__MainSt__6B24EA82" Association="Self.FK__Requests__MainSt__6B24EA82">
+            <End Role="Strings" EntitySet="Strings" />
+            <End Role="Requests" EntitySet="Requests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StringingAppDBModelStoreContainer" CdmEntityContainer="StringingAppDBEntities">
+          <EntitySetMapping Name="Clubs">
+            <EntityTypeMapping TypeName="StringingAppDBModel.Club">
+              <MappingFragment StoreEntitySet="Clubs">
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+                <ScalarProperty Name="ClubName" ColumnName="ClubName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="StringingAppDBModel.Member">
+              <MappingFragment StoreEntitySet="Members">
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="StringingAppDBModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="RequestId" ColumnName="RequestId" />
+                <ScalarProperty Name="ClubId" ColumnName="ClubId" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="MainStringsId" ColumnName="MainStringsId" />
+                <ScalarProperty Name="CrossStringsId" ColumnName="CrossStringsId" />
+                <ScalarProperty Name="MainTension" ColumnName="MainTension" />
+                <ScalarProperty Name="CrossTension" ColumnName="CrossTension" />
+                <ScalarProperty Name="DateReceived" ColumnName="DateReceived" />
+                <ScalarProperty Name="DateCompleted" ColumnName="DateCompleted" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Strings">
+            <EntityTypeMapping TypeName="StringingAppDBModel.String">
+              <MappingFragment StoreEntitySet="Strings">
+                <ScalarProperty Name="StringId" ColumnName="StringId" />
+                <ScalarProperty Name="StringName" ColumnName="StringName" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="IsPolyester" ColumnName="IsPolyester" />
+                <ScalarProperty Name="IsSyntheticGut" ColumnName="IsSyntheticGut" />
+                <ScalarProperty Name="IsOther" ColumnName="IsOther" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
